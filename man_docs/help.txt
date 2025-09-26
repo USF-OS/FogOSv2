@@ -1,0 +1,29 @@
+                          [ FogOSv2 Man User’s Guide ]
+
+                                [ Help Section ]
+
+
+
+
+                               [ Available Flags ]
+
+                ‘-p’ <NUM> display page at a set number of lines
+
+                ‘-h’ displays help page.
+
+                '-c' use w/ '-p', clears txt after displaying a chunk
+                
+                '-d' enables debug printouts for surface level debugging
+
+                '-s' will search ALL directories, first one is displayed. 
+
+
+
+
+                             [ Available Sections ]
+
+                      ‘1’ Command-Line-Utility (CLU) Pages
+
+                      ‘2’ C-Library (Clib) Pages
+                       
+
