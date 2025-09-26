@@ -1,0 +1,10 @@
+Hello world
+
+	This line starts with a tab
+This line has a DEL char: 
+This line has a BEL char: 
+
+Another blank line follows:
+
+
+End.
