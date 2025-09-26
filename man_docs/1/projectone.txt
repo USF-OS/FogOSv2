@@ -1,0 +1,61 @@
+Project 1: User Space
+For our first project, we’ll focus on user space. If you’ve explored your OS repo a bit, you’ll notice that many of the command line utilities you might find on a regular Unix machine aren’t there. The reason for that is simple: we have to build them! Run ls / on your OS to see everything that’s available, then run ls /bin on a Linux or macOS machine to see the difference.
+
+In this project, you have two options:
+
+Enhancing an existing utility
+Adding a new utility to the system
+You can work in teams of 2 on this project if you want, although having a teammate is not required.
+
+Deliverable 1: Research
+The first objective of this project is to decide what utility you want to add or which one you want to enhance. Here’s two examples:
+
+There originally was no head or tail utility in FogOS (one was added by a student group); these display the first N or last N lines of a file, respectively. Check out the man pages for more information about what they can do.
+The standard ls displays a “long listing” with file sizes and other information. It also doesn’t support colors. One past group modified ls to behave more like the ls we’re used to on Linux or macOS.
+The hard part of this is figuring out what is enough effort. Adding a -h help flag to a utility isn’t enough, for instance. The two bullet points above are probably reasonable (add a tail and head utility with the most basic features, add colors and -l mode to ls). Once you’ve decided what you want to do, file a Github issue on the FogOS repo describing what your plan is. Once a member of the course staff approves it, you can get started. We may propose some changes to your plan to increase or reduce its scope as needed.
+
+Sometimes the things you want to add may require features that we don’t have, new system calls, or changes the kernel. Do a bit of research to make sure you can actually build what you want to build. If you ask an LLM for help with this, do some research to determine whether what it’s suggesting is really going to be possible… sometimes they can be overambitious.
+
+Once your proposal is accepted, we’ll be flexible if you run into issues. These things happen all the time with real software development, and this project will be no exception!
+
+Deliverable 2: Implementation
+This part is “straightforward”… it’s easy to describe, but the actual work may take some time.
+
+Build whatever you proposed above
+Test it (write test cases)
+Document it
+Submit a pull request for it to be merged into the main FogOS branch.
+Deliverable 3: Code Review
+Each pull request submitted in Phase 2 must be peer reviewed by at least two other students and one member of the course staff before they can be merged. Each student must carry out TWO code reviews on other teams' pull requests. Course staff must sign off on the code reviews you submit.
+
+Our code reviews involve:
+
+Checking to make sure the functionality delivered matches the original goals
+Correcting any minor formatting or documentation issues
+Proposing ways to refactor the code to improve readability, efficiency, or correctness
+Thoroughly testing the code to find failures and edge cases. Discovering a bug is one of the best things that can come out of a code review.
+You should also verify each item in the following checklist:
+
+**High Level Checks**:
+- [ ] Is documentation included? This should explain how to build, run, and test the software.
+- [ ] PR fully resolves the task/issue
+- [ ] Does the PR have tests?
+- [ ] Does the PR follow project code formatting standards?
+- [ ] Does the OS still compile and run?
+
+**Code Checks**:
+- [ ] Does the code achieve its intended purpose?
+- [ ] Were all edge cases considered?
+- [ ] Is the code organized and maintainable?
+- [ ] Does the code maintain the same level of performance? (no performance regressions)
+Please see the full documentation on Code Reviews for more information.
+
+Grading Specification
+This project is worth 10 points and is split into two parts:
+
+[6 pts] Part 1
+[1 pts] project proposal and GitHub issue
+[5 pts] project implementation
+[4 pts] Part 2
+[2 pts] code review 1
+[2 pts] code review 2

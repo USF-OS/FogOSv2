@@ -123,6 +123,8 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 .PRECIOUS: %.o
 
 UPROGS=\
+	$U/_clear\
+	$U/_man\
 	$U/_cat\
 	$U/_echo\
 	$U/_forktest\
@@ -143,8 +145,9 @@ UPROGS=\
 	$U/_forphan\
 	$U/_dorphan\
 
-fs.img: mkfs/mkfs README.md $(UPROGS)
-	mkfs/mkfs fs.img README.md $(UPROGS)
+
+fs.img: mkfs/mkfs README.md man_docs $(UPROGS)
+	mkfs/mkfs fs.img README.md man_docs $(UPROGS)
 
 -include kernel/*.d user/*.d
 
