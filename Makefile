@@ -142,9 +142,10 @@ UPROGS=\
 	$U/_logstress\
 	$U/_forphan\
 	$U/_dorphan\
+	$U/_cmp\
 
-fs.img: mkfs/mkfs README.md $(UPROGS)
-	mkfs/mkfs fs.img README.md $(UPROGS)
+fs.img: mkfs/mkfs README.md $(UPROGS) tests
+	mkfs/mkfs fs.img README.md $(UPROGS) tests
 
 -include kernel/*.d user/*.d
 
