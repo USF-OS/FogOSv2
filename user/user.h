@@ -6,6 +6,7 @@ struct stat;
 int fork(void);
 int exit(int) __attribute__((noreturn));
 int wait(int*);
+int wait2(int*, uint64*, uint64*);
 int pipe(int*);
 int write(int, const void*, int);
 int read(int, void*, int);
@@ -24,6 +25,8 @@ int getpid(void);
 char* sys_sbrk(int,int);
 int pause(int);
 int uptime(void);
+uint64 ctime(void);
+int timtog(void);
 
 // ulib.c
 int stat(const char*, struct stat*);

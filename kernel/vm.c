@@ -47,6 +47,9 @@ kvmmake(void)
 
   // allocate and map a kernel stack for each process.
   proc_mapstacks(kpgtbl);
+
+  // Project 01 - to get the current time
+  kvmmap(kpgtbl, RTC, RTC, PGSIZE, PTE_R | PTE_W);
   
   return kpgtbl;
 }

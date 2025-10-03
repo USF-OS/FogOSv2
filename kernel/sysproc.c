@@ -37,6 +37,17 @@ sys_wait(void)
 }
 
 uint64
+sys_wait2(void)
+{
+	uint64 p, usr, kern;
+	argaddr(0, &p);
+	argaddr(1, &usr);
+	argaddr(2, &kern);
+
+	return kwait2(p, usr, kern);
+}
+
+uint64
 sys_sbrk(void)
 {
   uint64 addr;
@@ -104,4 +115,29 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+
+uint64
+sys_ctime(void)
+{
+  uint32 second = *((uint32 *) (RTC + 0x4));
+  uint32 first = *((uint32 *) (RTC));
+  // printf("%ld\n", ((uint64) second << 32 | first) / 1000000);
+  if (myproc() -> timing) {
+  	return (((uint64) second << 32 | first) / 1000000);
+  } else {
+  	return ((uint64) second << 32 | first);
+  }
+}
+
+uint64
+sys_timtog()
+{
+  struct proc *p = myproc();
+  p->timing = !p->timing;
+  if (p -> timing) {
+    return 1;
+  } else {
+    return 0;
+  }
 }

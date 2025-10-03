@@ -104,4 +104,8 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  short timing;				   // Toggles timing
+  uint64 kern_time;            // Kernel Time Tracking
+  uint64 user_time;			   // User Time Tracking
+  uint64 real_time;			   // Real Time Tracking
 };
