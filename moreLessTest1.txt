@@ -1,0 +1,100 @@
+Line 1: The test file begins
+Line 2: Testing the more and less utilities
+Line 3: Each line for tracking
+Line 4: Hiiiiii
+Line 5: Forward scrolling 
+Line 6: Longer than 24 lines
+Line 7: Hello
+Line 8: And line-by-line up to 100
+Line 9: More is working first
+Line 10: Less is later
+Line 11: Getting closer to the middle
+Line 12: Halfway 
+Line 13: Keep reading 
+Line 14: Keep goinggg
+Line 15: Testing is an important part 
+Line 16: Testing is a required part
+Line 17: A Few more lines to go
+Line 18: Almost at line 24 
+Line 19: One page?
+Line 20: After line 24, you'll see --More--
+Line 21: Or Less
+Line 22: Testing continues on the next page
+Line 23: One more line 
+Line 24: This is the last line of page 1
+Line 25: Welcome to page 2!
+Line 26: Press space to continue 
+Line 27: Press 'b' to go back in less
+Line 28: Arrow keys work in less too
+Line 29: Up arrow goes back
+Line 30: Down arrow goes forward
+Line 31: Testing the 'g' command
+Line 32: Press 'g' to jump to the beginning
+Line 33: Testing the 'G' command
+Line 34: Press 'G' to jump to the end
+Line 35: More content 
+Line 36: Less content
+Line 37: Quality?
+Line 38: This file has 100 lineee
+Line 39: Keep scrolling
+Line 40: Testing navigation 
+Line 41: Forward and backward 
+Line 42: Almost 50 lines
+Line 43: Up to 100 pages 
+Line 44: That's plenty for most files
+Line 45: This test file is much smaller
+Line 46: But I don't know what to say
+Line 47: On page 2
+Line 48: Almost done with this page
+Line 49: Getting closer to page 3
+Line 50: Coming soon
+Line 51: Welcome to page 3!
+Line 52: Testing continues 
+Line 53: Multiple pages help test scrolling
+Line 54: Forward and backward
+Line 55: Buffer
+Line 56: Testing
+Line 57: Old pages get overwritten
+Line 58: But only after 100 pages
+Line 59: Memory issues
+Line 60: While maintaining functionality
+Line 61: Testing scenarios
+Line 62: Testing is an important part 
+Line 63: What happens at the end?
+Line 64: The (END) prompt should appear
+Line 65: Pressing 'g' goes to start
+Line 66: Pressing 'G' goes to end
+Line 67: These are useful shortcuts
+Line 68: For navigating large files
+Line 69: Files can be very long
+Line 70: Configuration 
+Line 71: Documentation as well
+Line 72: Helps
+Line 73: This is near the end
+Line 74: Just a few more lines
+Line 75: Last page approaching
+Line 76: The final page begins soon
+Line 77: Testing is an important part 
+Line 78: The (END) marker should show
+Line 79: When you reach this point
+Line 80: And can't scroll further forward
+Line 81: But 'b' still works to go back
+Line 82: And 'g' returns to the start
+Line 83: Testing is an important part 
+Line 84: Quick jumps
+Line 85: In large files
+Line 86: This is a test file 
+Line 87: Functionality
+Line 88: Of both more and less
+Line 89: More is simpler, forward only
+Line 90: Less adds backward navigation
+Line 91: Plus arrow keys and jumps
+Line 92: Both are useful utilities
+Line 93: For reading text files
+Line 94: In the terminal
+Line 95: Without overwhelming the screen
+Line 96: Page-by-page display
+Line 97: Controlled
+Line 98: This is almost the end
+Line 99: Just one more line after this
+Line 100: This is the final line of the test file!

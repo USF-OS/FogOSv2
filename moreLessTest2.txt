@@ -1,0 +1,300 @@
+Line 1: The test file begins
+Line 2: Testing the more and less utilities
+Line 3: Each line for tracking
+Line 4: Hiiiiii
+Line 5: Forward scrolling 
+Line 6: Longer than 24 lines
+Line 7: Hello
+Line 8: And line-by-line up to 100
+Line 9: More is working first
+Line 10: Less is later
+Line 11: Getting closer to the middle
+Line 12: Halfway 
+Line 13: Keep reading 
+Line 14: Keep goinggg
+Line 15: Testing is an important part 
+Line 16: Testing is a required part
+Line 17: A Few more lines to go
+Line 18: Almost at line 24 
+Line 19: One page?
+Line 20: After line 24, you'll see --More--
+Line 21: Or Less
+Line 22: Testing continues on the next page
+Line 23: One more line 
+Line 24: This is the last line of page 1
+Line 25: Welcome to page 2!
+Line 26: Press space to continue 
+Line 27: Press 'b' to go back in less
+Line 28: Arrow keys work in less too
+Line 29: Up arrow goes back
+Line 30: Down arrow goes forward
+Line 31: Testing the 'g' command
+Line 32: Press 'g' to jump to the beginning
+Line 33: Testing the 'G' command
+Line 34: Press 'G' to jump to the end
+Line 35: More content 
+Line 36: Less content
+Line 37: Quality?
+Line 38: This file has 300 lines
+Line 39: Keep scrolling
+Line 40: Testing navigation 
+Line 41: Forward and backward 
+Line 42: Almost 50 lines
+Line 43: Up to 100 pages 
+Line 44: That's plenty for most files
+Line 45: This test file is much smaller
+Line 46: But I don't know what to say
+Line 47: On page 2
+Line 48: Almost done with this page
+Line 49: Getting closer to page 3
+Line 50: Page break coming soon
+Line 51: Welcome to page 3!
+Line 52: Testing continues 
+Line 53: Multiple pages help test scrolling
+Line 54: Forward and backward
+Line 55: Buffer testing
+Line 56: Memory management
+Line 57: Old pages get overwritten
+Line 58: But only after 100 pages
+Line 59: Memory issues prevention
+Line 60: While maintaining functionality
+Line 61: Testing different scenarios
+Line 62: Edge cases are important
+Line 63: What happens at the end?
+Line 64: The (END) prompt should appear
+Line 65: Pressing 'g' goes to start
+Line 66: Pressing 'G' goes to end
+Line 67: These are useful shortcuts
+Line 68: For navigating large files
+Line 69: Log files can be very long
+Line 70: Configuration files too
+Line 71: Documentation as well
+Line 72: Having good navigation helps
+Line 73: This is near the end of page 3
+Line 74: Just a few more lines
+Line 75: Page 4 approaching
+Line 76: The next page begins soon
+Line 77: Testing the end of file behavior
+Line 78: The (END) marker should show
+Line 79: When you reach this point
+Line 80: And can't scroll further forward
+Line 81: But 'b' still works to go back
+Line 82: And 'g' returns to the start
+Line 83: These features make navigation easy
+Line 84: Quick jumps save time
+Line 85: Especially in large files
+Line 86: This test file demonstrates
+Line 87: All the core functionality
+Line 88: Of both more and less
+Line 89: More is simpler, forward only
+Line 90: Less adds backward navigation
+Line 91: Plus arrow keys and jumps
+Line 92: Both are useful utilities
+Line 93: For reading text files
+Line 94: In the terminal
+Line 95: Without overwhelming the screen
+Line 96: Page by page display
+Line 97: Controlled by the user
+Line 98: This is page 4 content
+Line 99: Continuing with more test lines
+Line 100: One hundred lines milestone!
+Line 101: This is line 101
+Line 102: This is line 102
+Line 103: This is line 103
+Line 104: This is line 104
+Line 105: This is line 105
+Line 106: This is line 106
+Line 107: This is line 107
+Line 108: This is line 108
+Line 109: This is line 109
+Line 110: This is line 110
+Line 111: This is line 111
+Line 112: This is line 112
+Line 113: This is line 113
+Line 114: This is line 114
+Line 115: This is line 115
+Line 116: This is line 116
+Line 117: This is line 117
+Line 118: This is line 118
+Line 119: This is line 119
+Line 120: This is line 120
+Line 121: This is line 121
+Line 122: This is line 122
+Line 123: This is line 123
+Line 124: This is line 124
+Line 125: This is line 125
+Line 126: This is line 126
+Line 127: This is line 127
+Line 128: This is line 128
+Line 129: This is line 129
+Line 130: This is line 130
+Line 131: This is line 131
+Line 132: This is line 132
+Line 133: This is line 133
+Line 134: This is line 134
+Line 135: This is line 135
+Line 136: This is line 136
+Line 137: This is line 137
+Line 138: This is line 138
+Line 139: This is line 139
+Line 140: This is line 140
+Line 141: This is line 141
+Line 142: This is line 142
+Line 143: This is line 143
+Line 144: This is line 144
+Line 145: This is line 145
+Line 146: This is line 146
+Line 147: This is line 147
+Line 148: This is line 148
+Line 149: This is line 149
+Line 150: This is line 150
+Line 151: This is line 151
+Line 152: This is line 152
+Line 153: This is line 153
+Line 154: This is line 154
+Line 155: This is line 155
+Line 156: This is line 156
+Line 157: This is line 157
+Line 158: This is line 158
+Line 159: This is line 159
+Line 160: This is line 160
+Line 161: This is line 161
+Line 162: This is line 162
+Line 163: This is line 163
+Line 164: This is line 164
+Line 165: This is line 165
+Line 166: This is line 166
+Line 167: This is line 167
+Line 168: This is line 168
+Line 169: This is line 169
+Line 170: This is line 170
+Line 171: This is line 171
+Line 172: This is line 172
+Line 173: This is line 173
+Line 174: This is line 174
+Line 175: This is line 175
+Line 176: This is line 176
+Line 177: This is line 177
+Line 178: This is line 178
+Line 179: This is line 179
+Line 180: This is line 180
+Line 181: This is line 181
+Line 182: This is line 182
+Line 183: This is line 183
+Line 184: This is line 184
+Line 185: This is line 185
+Line 186: This is line 186
+Line 187: This is line 187
+Line 188: This is line 188
+Line 189: This is line 189
+Line 190: This is line 190
+Line 191: This is line 191
+Line 192: This is line 192
+Line 193: This is line 193
+Line 194: This is line 194
+Line 195: This is line 195
+Line 196: This is line 196
+Line 197: This is line 197
+Line 198: This is line 198
+Line 199: This is line 199
+Line 200: This is line 200
+Line 201: This is line 201
+Line 202: This is line 202
+Line 203: This is line 203
+Line 204: This is line 204
+Line 205: This is line 205
+Line 206: This is line 206
+Line 207: This is line 207
+Line 208: This is line 208
+Line 209: This is line 209
+Line 210: This is line 210
+Line 211: This is line 211
+Line 212: This is line 212
+Line 213: This is line 213
+Line 214: This is line 214
+Line 215: This is line 215
+Line 216: This is line 216
+Line 217: This is line 217
+Line 218: This is line 218
+Line 219: This is line 219
+Line 220: This is line 220
+Line 221: This is line 221
+Line 222: This is line 222
+Line 223: This is line 223
+Line 224: This is line 224
+Line 225: This is line 225
+Line 226: This is line 226
+Line 227: This is line 227
+Line 228: This is line 228
+Line 229: This is line 229
+Line 230: This is line 230
+Line 231: This is line 231
+Line 232: This is line 232
+Line 233: This is line 233
+Line 234: This is line 234
+Line 235: This is line 235
+Line 236: This is line 236
+Line 237: This is line 237
+Line 238: This is line 238
+Line 239: This is line 239
+Line 240: This is line 240
+Line 241: This is line 241
+Line 242: This is line 242
+Line 243: This is line 243
+Line 244: This is line 244
+Line 245: This is line 245
+Line 246: This is line 246
+Line 247: This is line 247
+Line 248: This is line 248
+Line 249: This is line 249
+Line 250: This is line 250
+Line 251: This is line 251
+Line 252: This is line 252
+Line 253: This is line 253
+Line 254: This is line 254
+Line 255: This is line 255
+Line 256: This is line 256
+Line 257: This is line 257
+Line 258: This is line 258
+Line 259: This is line 259
+Line 260: This is line 260
+Line 261: This is line 261
+Line 262: This is line 262
+Line 263: This is line 263
+Line 264: This is line 264
+Line 265: This is line 265
+Line 266: This is line 266
+Line 267: This is line 267
+Line 268: This is line 268
+Line 269: This is line 269
+Line 270: This is line 270
+Line 271: This is line 271
+Line 272: This is line 272
+Line 273: This is line 273
+Line 274: This is line 274
+Line 275: This is line 275
+Line 276: This is line 276
+Line 277: This is line 277
+Line 278: This is line 278
+Line 279: This is line 279
+Line 280: This is line 280
+Line 281: This is line 281
+Line 282: This is line 282
+Line 283: This is line 283
+Line 284: This is line 284
+Line 285: This is line 285
+Line 286: This is line 286
+Line 287: This is line 287
+Line 288: This is line 288
+Line 289: This is line 289
+Line 290: This is line 290
+Line 291: This is line 291
+Line 292: This is line 292
+Line 293: This is line 293
+Line 294: This is line 294
+Line 295: This is line 295
+Line 296: This is line 296
+Line 297: This is line 297
+Line 298: This is line 298
+Line 299: This is line 299
+Line 300: This is the final line of the test file!

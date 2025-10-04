@@ -142,10 +142,11 @@ UPROGS=\
 	$U/_logstress\
 	$U/_forphan\
 	$U/_dorphan\
+	$U/_more\
+	$U/_less\
 
-fs.img: mkfs/mkfs README.md $(UPROGS)
-	mkfs/mkfs fs.img README.md $(UPROGS)
-
+fs.img: mkfs/mkfs README.md moreLessTest1.txt moreLessEmptyTest.txt moreLessTest2.txt $(UPROGS)
+	mkfs/mkfs fs.img README.md moreLessTest1.txt moreLessEmptyTest.txt moreLessTest2.txt $(UPROGS)
 -include kernel/*.d user/*.d
 
 clean: 

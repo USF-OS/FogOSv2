@@ -1,0 +1,102 @@
+Echo Command Test
+
+Test 1: Simple string output
+echo hello
+
+Expected output:
+hello
+
+
+Test 2: Multiple arguments with spaces
+echo hello world test
+
+Expected output:
+hello world test
+
+Test 3: No arguments (blank line)
+echo
+
+Expected output:
+
+
+Test 4: Single character
+echo a
+
+Expected output:
+a
+
+Test 5: Numbers
+echo 123 456 789
+
+Expected output:
+123 456 789
+
+Test 6: -n flag (no trailing newline)
+echo -n hello
+
+Expected output (no trailing newline):
+hello
+
+Test 7: -n flag with multiple arguments
+echo -n hello world
+
+Expected output (no trailing newline):
+hello world
+
+Test 8: -n flag with no other arguments
+echo -n
+
+Expected output (no output, no newline):
+
+
+Test 9: Help option
+echo --help
+
+Expected output:
+Usage: echo [OPTION]... [STRING]...
+Echo the STRING(s) to standard output.
+
+Options:
+  -n        do not output the trailing newline
+  --help    display this help and exit
+
+Test 10: Multiple -n flags
+echo -n -n hello
+
+Expected output (no trailing newline):
+hello
+
+Test 11: Unknown single option
+echo -x test
+
+Expected output:
+echo: unknown option -x
+Try 'echo --help' for more information.
+-----------------------EDGE cases---------------------
+Test 12: Single dash
+echo - hello
+
+Expected output:
+hello
+
+Test 13: Long string
+echo thisisaverylongstringwithnospacestotestlinebufferhandling
+
+Expected output:
+thisisaverylongstringwithnospacestotestlinebufferhandling
+
+Test 14: Very long string
+echo this is a very long string with many words to test buffer handling and ensure no truncation occurs
+
+Expected output:
+too many args
+
+Test 15: Sequential echo commands
+echo first
+echo second
+
+Expected output:
+first
+second
+
+
