@@ -135,6 +135,7 @@ UPROGS=\
 	$U/_rm\
 	$U/_sh\
 	$U/_stressfs\
+	$U/_tee\
 	$U/_usertests\
 	$U/_grind\
 	$U/_wc\
@@ -143,8 +144,8 @@ UPROGS=\
 	$U/_forphan\
 	$U/_dorphan\
 
-fs.img: mkfs/mkfs README.md $(UPROGS)
-	mkfs/mkfs fs.img README.md $(UPROGS)
+fs.img: mkfs/mkfs README.md $(UPROGS) tests
+	mkfs/mkfs fs.img README.md $(UPROGS) tests
 
 -include kernel/*.d user/*.d
 

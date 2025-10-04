@@ -503,3 +503,27 @@ sys_pipe(void)
   }
   return 0;
 }
+
+uint64
+sys_seek(void)
+{
+  int user_fd; 		// variable to hold the fd passed by the user
+  int kernel_fd;	// local copy of the fd from the user
+  struct file *f;	// pointer to the kernel's file struct
+  int offset;		// the offset to set the file pointer to
+
+  // Get fd (first argument of seek that the user puts in)
+  argint(0, &user_fd);
+
+  // Get offset (second argument of seek)
+  argint(1, &offset);
+
+  // 0 = first argument (fd), &kernel_fd = copy of the users fd, &f = pointer to the kernel's file struct
+  argfd(0, &kernel_fd, &f);
+
+  // Found off in kernel/file.h
+  f->off = offset;
+
+  return 0;
+
+}
