@@ -134,7 +134,7 @@ runcmd(struct cmd *cmd)
 int
 getcmd(char *buf, int nbuf)
 {
-  write(2, "$ ", 2);
+  fprintf(2, "%s$ ", cwd);
   memset(buf, 0, nbuf);
   gets(buf, nbuf);
   if(buf[0] == 0) // EOF
@@ -166,8 +166,15 @@ main(void)
     if(cmd[0] == 'c' && cmd[1] == 'd' && cmd[2] == ' '){
       // Chdir must be called by the parent, not the child.
       cmd[strlen(cmd)-1] = 0;  // chop \n
-      if(chdir(cmd+3) < 0)
+      if(chdir(cmd+3) < 0){
         fprintf(2, "cannot cd %s\n", cmd+3);
+      } else {
+        // Updates the cwd
+        getcwd_user(cmd+3);
+      }
+    } else if (cmd[0] == 'p' && cmd[1] == 'w' && cmd[2] == 'd' && (cmd[3] == '\n' || cmd[3] == '\0')){
+        // Prints Working Directory
+        printf("%s\n", cwd);
     } else {
       if(fork1() == 0)
         runcmd(parsecmd(cmd));

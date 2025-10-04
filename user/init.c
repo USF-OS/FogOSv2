@@ -11,6 +11,17 @@
 
 char *argv[] = { "sh", 0 };
 
+//Creates test directories for users on loadup
+static void make_test_directories(void) {
+  mkdir("/test1");
+  mkdir("/test1/show");
+  mkdir("/test1/show/done");
+  mkdir("/test2");
+  mkdir("/test2/show1/");
+  mkdir("/test2/show2/");
+}
+
+
 int
 main(void)
 {
@@ -22,6 +33,7 @@ main(void)
   }
   dup(0);  // stdout
   dup(0);  // stderr
+  make_test_directories(); // makes test directories for users to explore through premade directories
 
   for(;;){
     printf("init: starting sh\n");
