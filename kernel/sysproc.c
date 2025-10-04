@@ -105,3 +105,12 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_clock(void)
+{
+    volatile uint32 *clock = (uint32 *) GOLD_RTC;
+    uint32 top = clock[0];
+    uint32 btm = clock[1];
+    return ((uint64) btm << 32) | top;
+}

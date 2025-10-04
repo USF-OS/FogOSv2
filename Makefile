@@ -142,6 +142,15 @@ UPROGS=\
 	$U/_logstress\
 	$U/_forphan\
 	$U/_dorphan\
+	$U/_date\
+	$U/_birthday\
+	$U/_birthdaytest\
+
+$U/_birthday: $U/birthday.o $U/time.o $(ULIB)
+	$(LD) $(LDFLAGS) -T $U/user.ld -o $U/_birthday $U/birthday.o $U/time.o $(ULIB)
+
+$U/_date: $U/date.o $U/time.o $(ULIB)
+	$(LD) $(LDFLAGS) -T $U/user.ld -o $U/_date $U/date.o $U/time.o $(ULIB)
 
 fs.img: mkfs/mkfs README.md $(UPROGS)
 	mkfs/mkfs fs.img README.md $(UPROGS)
