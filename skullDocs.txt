@@ -1,0 +1,9 @@
+NKDIR Docs
+
+The way this utility works is that by misspelling mkdir as nkdir a laughing 
+skull will print and laugh at you. Nothing else happens whatsoever. Why would anything 
+else happen? We tested our code by running nkdir and seeing the laughing skull. Then for 
+no reason whatsoever we ran ls, mkdir, echo, and grep just for fun. No reasoning at all.
+Happy Hallloween from Steven and Maxx
+
+Build this by running make qemu and then nkdir..then there's nothing else to do. No need to check grep, mkdir, ls, or echo. If you somehow are curious and do end up running those commands then you might want to run cat on those commands as well for a fun surprise.  
