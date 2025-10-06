@@ -124,6 +124,7 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 
 UPROGS=\
 	$U/_cat\
+	$U/_count\
 	$U/_echo\
 	$U/_forktest\
 	$U/_grep\
@@ -143,8 +144,8 @@ UPROGS=\
 	$U/_forphan\
 	$U/_dorphan\
 
-fs.img: mkfs/mkfs README.md $(UPROGS)
-	mkfs/mkfs fs.img README.md $(UPROGS)
+fs.img: mkfs/mkfs README.md test1.txt test2.txt $(UPROGS)
+	mkfs/mkfs fs.img README.md test1.txt test2.txt $(UPROGS)
 
 -include kernel/*.d user/*.d
 
