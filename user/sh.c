@@ -76,7 +76,23 @@ runcmd(struct cmd *cmd)
     ecmd = (struct execcmd*)cmd;
     if(ecmd->argv[0] == 0)
       exit(1);
+      
     exec(ecmd->argv[0], ecmd->argv);
+
+    /* new fix so that if the exec fails
+       it trys it with '/'
+    */
+
+	// checks if '/' is in the argv
+    if (strchr(ecmd->argv[0], '/') == 0) {
+    	char buf[128];
+    	buf[0] = '/';
+    	// copies buf which contains '/' into argv[0]
+    	strcpy(buf + 1, ecmd->argv[0]);
+    	// execs the command again but now with a '/'
+    	exec(buf, ecmd->argv);
+    }
+    
     fprintf(2, "exec %s failed\n", ecmd->argv[0]);
     break;
 
