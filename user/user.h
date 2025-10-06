@@ -1,4 +1,5 @@
 #define SBRK_ERROR ((char *)-1)
+#include <stddef.h>
 
 struct stat;
 
@@ -24,10 +25,13 @@ int getpid(void);
 char* sys_sbrk(int,int);
 int pause(int);
 int uptime(void);
+int time(void);
+int timeTest(void);
 
 // ulib.c
 int stat(const char*, struct stat*);
 char* strcpy(char*, const char*);
+char* strcat(char*, const char*);
 void *memmove(void*, const void*, int);
 char* strchr(const char*, char c);
 int strcmp(const char*, const char*);
@@ -39,6 +43,7 @@ int memcmp(const void *, const void *, uint);
 void *memcpy(void *, const void *, uint);
 char* sbrk(int);
 char* sbrklazy(int);
+long int strfmon(char *restrict s, size_t maxsize, const char *restrict format, ...);
 
 // printf.c
 void fprintf(int, const char*, ...) __attribute__ ((format (printf, 2, 3)));
