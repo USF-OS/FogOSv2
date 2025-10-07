@@ -101,6 +101,13 @@ _%: %.o $(ULIB) $U/user.ld
 	$(OBJDUMP) -S $@ > $*.asm
 	$(OBJDUMP) -t $@ | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > $*.sym
 
+$U/_casino: $U/casino.o $U/craps.o $U/blackjack.o $U/slots.o $U/money.o $(ULIB) $U/user.ld
+	$(LD) $(LDFLAGS) -T $U/user.ld -o $@ \
+		$U/casino.o $U/craps.o $U/blackjack.o $U/slots.o $U/money.o $(ULIB)
+	$(OBJDUMP) -S $@ > $U/casino.asm
+	$(OBJDUMP) -t $@ | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > $U/casino.sym
+
+
 $U/usys.S : $U/usys.pl
 	perl $U/usys.pl > $U/usys.S
 
@@ -123,6 +130,7 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 .PRECIOUS: %.o
 
 UPROGS=\
+	$U/_casino\
 	$U/_cat\
 	$U/_echo\
 	$U/_forktest\
