@@ -5,8 +5,12 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
-#include "vm.h"
+#include "syscall.h"
 
+#define SBRK_EAGER 1
+#define SBRK_LAZY  0
+
+volatile uint32 *test_dev = (uint32 *) VIRT_TEST;
 uint64
 sys_exit(void)
 {
@@ -104,4 +108,127 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+
+uint64
+sys_shutdown(void)
+{
+  *test_dev = 0x5555;  // MMIO write: shut down
+  return 0;
+}
+
+uint64
+sys_reboot(void)
+{
+  *test_dev = 0x7777;  // MMIO write: reboot
+  return 0;
+}
+
+uint64
+sys_rtcgettime(void)
+{
+    volatile uint32 *rtc = (uint32 *) VIRT_RTC;
+
+    uint32 lo = rtc[0];     // low 32 bits
+    uint32 hi = rtc[1];     // high 32 bits
+
+    return ((uint64)hi << 32) | lo;
+}
+
+uint64
+sys_strace_on(void)
+{
+  struct proc *p = myproc();
+  if (!p) return -1;
+  p->tracing = 1;
+  return 0;
+}
+
+uint64
+sys_wait2(void)
+{
+    uint64 ustatus;
+    uint64 usyscalls;
+
+    // Get the user-space addresses
+    argaddr(0, &ustatus);
+    argaddr(1, &usyscalls);
+
+    // Call wait2 and pass the addresses
+    return wait2(ustatus, usyscalls);
+}
+
+uint64
+sys_getcwd(void)
+{
+  uint64 buf;
+  int size;
+
+  // get syscall arguments
+  argaddr(0, &buf);
+  argint(1, &size);
+
+  const char *cwd = "/";  // temporary static CWD
+
+  // copyout: (pagetable, dst_user_va, src_kernel_ptr, len)
+  return copyout(myproc()->pagetable, buf, (char *)cwd, strlen(cwd) + 1);
+}
+
+// setnice(int n) => returns 0 on success, -1 on failure
+uint64
+sys_setnice(void)
+{
+    int n;
+    argint(0, &n);
+    if (n < 0 || n > 40) {return -1;}
+
+    if (n < 0) {n = 0;}
+    if (n > 3) {n = 3;}
+
+    struct proc *p = myproc();
+    acquire(&p->lock);
+    p->nice = n;
+    p->priority = 3 - n;
+    release(&p->lock);
+
+    return 0;
+                            
+}
+
+uint64
+sys_mmap(void)
+{
+    uint64 addr;
+    int length;
+    int prot;
+    int flags;
+    int fd;
+    int offset;
+
+    argaddr(0, &addr);
+    argint(1, &length);
+    argint(2, &prot);
+    argint(3, &flags);
+    argint(4, &fd);
+    argint(5, &offset);
+
+    return kmmap(addr, length, prot, flags, fd, offset);
+}
+
+uint64
+sys_munmap(void)
+{
+    uint64 addr;
+    int length;
+
+    argaddr(0, &addr);
+    argint(1, &length);
+
+    return kmunmap(addr, length);
+}
+
+uint64
+sys_freemem(void)
+{
+    return freemem();
 }

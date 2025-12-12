@@ -26,8 +26,6 @@ struct cpu {
   int intena;                 // Were interrupts enabled before push_off()?
 };
 
-extern struct cpu cpus[NCPU];
-
 // per-process data for the trap handling code in trampoline.S.
 // sits in a page by itself just under the trampoline page in the
 // user page table. not specially mapped in the kernel page table.
@@ -81,9 +79,31 @@ struct trapframe {
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
+void strace(struct proc *p, int num, int retval);
+
+int wait2(uint64 ustatus, uint64 usyscalls);
+
+// ----- mmap bookkeeping -----
+
+#define MAX_MMAPS 16
+
+struct mmap_region {
+    int used;       // 0 = free, 1 = used
+    uint64 pa;      // physical address of the page
+    uint64 addr;    // virtual address in the process
+    int length;     // length of the mapping (in bytes or pages)
+    int prot;       // protection flags (PTE_R | PTE_W | PTE_U)
+    int flags;      // mapping flags (MAP_ANONYMOUS, etc.)
+    int fd;         // file descriptor, if mapping a file
+    int offset;     // offset into the file
+};
+
 // Per-process state
 struct proc {
   struct spinlock lock;
+  int syscalls;
+  int syscall_count;   // number of syscalls this process has made
+    
 
   // p->lock must be held when using these:
   enum procstate state;        // Process state
@@ -91,6 +111,10 @@ struct proc {
   int killed;                  // If non-zero, have been killed
   int xstate;                  // Exit status to be returned to parent's wait
   int pid;                     // Process ID
+
+  int traced;                  // Tracing flag (0 = off, 1 = on)
+  int tracing;                 // 1 if strace enabled
+
 
   // wait_lock must be held when using this:
   struct proc *parent;         // Parent process
@@ -104,4 +128,20 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  int nice;      // niceness (0..3) where 0 = highest priority, 3 = lowest nice
+  int priority;  // effective priority (0..3) where 3 = highest scheduling priority
+
+  uint64 mmap_base;   // top of mmap area (exclusive upper bound)
+  uint64 mmap_next;   // next free VA in mmap area (decreases)
+  struct mmap_region mmaps[MAX_MMAPS];
+      
+  
 };
+
+extern struct cpu cpus[NCPU];
+extern struct proc proc[NPROC];
+extern struct spinlock pid_lock;
+extern int nextpid;
+extern struct proc *initproc;
+

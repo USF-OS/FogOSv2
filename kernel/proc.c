@@ -7,13 +7,11 @@
 #include "defs.h"
 
 struct cpu cpus[NCPU];
-
 struct proc proc[NPROC];
-
-struct proc *initproc;
-
 int nextpid = 1;
 struct spinlock pid_lock;
+struct proc *initproc;
+
 
 extern void forkret(void);
 static void freeproc(struct proc *p);
@@ -119,11 +117,20 @@ allocproc(void)
       release(&p->lock);
     }
   }
+
+  // after p->state = USED / or whatever you do in allocproc
+  p->nice = 0;         // default niceness (0 = high priority)
+  p->priority = 3 - p->nice; // default priority = 3
+  
   return 0;
 
 found:
   p->pid = allocpid();
   p->state = USED;
+  // initialize mmap regions
+  for (int i = 0; i < MAX_MMAPS; i++) {
+    p->mmaps[i].used = 0;
+  }
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
@@ -168,7 +175,16 @@ freeproc(struct proc *p)
   p->chan = 0;
   p->killed = 0;
   p->xstate = 0;
+  p->traced = 0;  // Clear tracing flag
+  p->tracing = 0; // Clear tracing flag
+
+  // clear mmap regions
+  for (int i = 0; i < MAX_MMAPS; i++) {
+    p->mmaps[i].used = 0;
+  }
+  
   p->state = UNUSED;
+  p->syscall_count = 0;
 }
 
 // Create a user page table for a given process, with no user memory,
@@ -286,6 +302,9 @@ kfork(void)
   np->cwd = idup(p->cwd);
 
   safestrcpy(np->name, p->name, sizeof(p->name));
+
+  // Copy tracing state from parent to child
+  np->traced = p->traced;
 
   pid = np->pid;
 
@@ -421,42 +440,46 @@ kwait(uint64 addr)
 void
 scheduler(void)
 {
-  struct proc *p;
+  //struct proc *p;
   struct cpu *c = mycpu();
-
   c->proc = 0;
   for(;;){
-    // The most recent process to run may have had interrupts
-    // turned off; enable them to avoid a deadlock if all
-    // processes are waiting. Then turn them back off
-    // to avoid a possible race between an interrupt
-    // and wfi.
-    intr_on();
-    intr_off();
+      // enable interrupts on this CPU.
+      intr_on();
 
-    int found = 0;
-    for(p = proc; p < &proc[NPROC]; p++) {
-      acquire(&p->lock);
-      if(p->state == RUNNABLE) {
-        // Switch to chosen process.  It is the process's job
-        // to release its lock and then reacquire it
-        // before jumping back to us.
-        p->state = RUNNING;
-        c->proc = p;
-        swtch(&c->context, &p->context);
-
-        // Process is done running for now.
-        // It should have changed its p->state before coming back.
-        c->proc = 0;
-        found = 1;
+      // Find maximum priority among RUNNABLE processes (0..3)
+      int maxprio = 0;
+      struct proc *p;
+      for(p = proc; p < &proc[NPROC]; p++){
+        acquire(&p->lock);
+        if(p->state == RUNNABLE && p->priority > maxprio)
+          maxprio = p->priority;
+        release(&p->lock);
       }
-      release(&p->lock);
+
+      // iterate from highest priority down to lowest.
+      for(int target = maxprio; target >= 0; --target){
+        for(p = proc; p < &proc[NPROC]; p++){
+          acquire(&p->lock);
+          if(p->state != RUNNABLE || p->priority < target){
+            release(&p->lock);
+            continue;
+          }
+
+          // Found runnable process with priority >= target
+          p->state = RUNNING;
+          // switch to it
+          c->proc = p;
+          swtch(&c->context, &p->context);
+          // back here after process yields
+          c->proc = 0;
+          release(&p->lock);
+
+          // optional: recompute maxprio to skip remaining levels if no higher ones exist
+          // (simple optimization—safe to omit if you want simpler code)
+        }
+      }
     }
-    if(found == 0) {
-      // nothing to run; stop running on this core until an interrupt.
-      asm volatile("wfi");
-    }
-  }
 }
 
 // Switch to scheduler.  Must hold only p->lock
@@ -656,6 +679,65 @@ either_copyin(void *dst, int user_src, uint64 src, uint64 len)
   }
 }
 
+// syscall tracing helper
+void
+strace(struct proc *p, int num, int retval)
+{
+    if (p->traced) {
+            printf("%d: syscall %d -> %d\n", p->pid, num, retval);
+    }
+
+}
+
+// Wait for a child to exit, returning its pid and filling in status/syscall count.
+int
+wait2(uint64 ustatus, uint64 usyscalls)
+{
+  struct proc *p = myproc();
+  struct proc *np;
+  int havekids, pid;
+
+  acquire(&wait_lock);
+
+  for(;;){
+    havekids = 0;
+    for(np = proc; np < &proc[NPROC]; np++){
+      if(np->parent == p){
+        havekids = 1;
+        acquire(&np->lock);
+        if(np->state == ZOMBIE){
+          pid = np->pid;
+          if(ustatus != 0 &&
+             copyout(p->pagetable, ustatus, (char *)&np->xstate,
+                     sizeof(np->xstate)) < 0){
+            release(&np->lock);
+            release(&wait_lock);
+            return -1;
+          }
+          if(usyscalls != 0 &&
+             copyout(p->pagetable, usyscalls, (char *)&np->syscall_count,
+                     sizeof(np->syscall_count)) < 0){
+            release(&np->lock);
+            release(&wait_lock);
+            return -1;
+          }
+          freeproc(np);
+          release(&np->lock);
+          release(&wait_lock);
+          return pid;
+        }
+        release(&np->lock);
+      }
+    }
+    if(!havekids || killed(p)){
+      release(&wait_lock);
+      return -1;
+    }
+    sleep(p, &wait_lock);
+  }
+}
+
+
 // Print a process listing to console.  For debugging.
 // Runs when user types ^P on console.
 // No lock to avoid wedging a stuck machine further.
@@ -672,16 +754,78 @@ procdump(void)
   };
   struct proc *p;
   char *state;
-
+  
   printf("\n");
   for(p = proc; p < &proc[NPROC]; p++){
     if(p->state == UNUSED)
       continue;
-    if(p->state >= 0 && p->state < NELEM(states) && states[p->state])
+    if(p->state >= 0 && p->state < NELEM(states) && states[p->state]) {
       state = states[p->state];
-    else
+    } else {
       state = "???";
-    printf("%d %s %s", p->pid, state, p->name);
+    }
+    acquire(&p->lock);
+    if (p->state == RUNNING) {
+        printf("%d %s  pid %d state RUNNING prio %d\n", p->pid, p->name, p->pid, p->priority);
+    } else {
+            printf("%d %s  state %d prio %d ...\n", p->pid, p->name, p->state, p->priority);
+    }
+    printf("%s", state);
+    release(&p->lock);
     printf("\n");
   }
+
 }
+
+uint64
+kmmap(uint64 addr, int length, int prot, int flags, int fd, int offset)
+{
+    struct proc *p = myproc();
+    if (length != PGSIZE)
+        return -1;
+
+    if (addr == 0)
+        addr = 0x40000000UL;
+
+    char *mem = kalloc();
+    if (mem == 0)
+        return -1;
+
+    if (mappages(p->pagetable, addr, PGSIZE, (uint64)mem, PTE_U | PTE_R | PTE_W) < 0){
+        kfree(mem);
+        return -1;
+    }
+
+    // store in mmaps[]
+    for (int i = 0; i < MAX_MMAPS; i++) {
+        if (!p->mmaps[i].used) {
+            p->mmaps[i].used = 1;
+            p->mmaps[i].addr = addr;
+            p->mmaps[i].pa = (uint64)mem;
+            break;
+        }
+    }
+
+    // **IMPORTANT**: update process size if addr is beyond current size
+    if (addr + PGSIZE > p->sz)
+        p->sz = addr + PGSIZE;
+
+    return addr;
+}
+
+uint64
+kmunmap(uint64 addr, int length)
+{
+    struct proc *p = myproc();
+
+    for (int i = 0; i < MAX_MMAPS; i++) {
+        if (p->mmaps[i].used && p->mmaps[i].addr == addr) {
+            uvmunmap(p->pagetable, addr, 1, 1);  // removes + frees
+            p->mmaps[i].used = 0;
+            return 0;
+        }
+    }
+
+    return -1;
+}
+
